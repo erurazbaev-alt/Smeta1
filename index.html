@@ -8,6 +8,10 @@
 </head>
 <body>
   <main class="page">
+    <header class="print-header" aria-hidden="true">
+      <h1 id="print-title">Смета</h1>
+    </header>
+
     <header class="page-header">
       <p class="eyebrow">Простая смета</p>
       <h1>Смета за 5 минут</h1>
@@ -60,12 +64,66 @@
           <tbody id="positions-body"></tbody>
         </table>
       </div>
+
+      <div class="adjustments" aria-label="Скидка, НДС и валюта">
+        <label>
+          <span>Скидка, %</span>
+          <input type="text" id="discount-rate" inputmode="decimal" value="0" aria-describedby="discount-hint">
+          <small id="discount-hint">От суммы позиций</small>
+        </label>
+        <label>
+          <span>НДС, %</span>
+          <input type="text" id="vat-rate" inputmode="decimal" value="0" aria-describedby="vat-hint">
+          <small id="vat-hint">От суммы со скидкой</small>
+        </label>
+        <label>
+          <span>Валюта</span>
+          <select id="currency" aria-label="Валюта сметы">
+            <option value="₸">₸</option>
+            <option value="₽">₽</option>
+            <option value="$">$</option>
+            <option value="€">€</option>
+          </select>
+        </label>
+      </div>
     </section>
 
-    <section class="total-card" aria-live="polite">
-      <span>Итого к оплате</span>
-      <strong id="grand-total">0 ₸</strong>
+    <section class="total-card" aria-label="Итоги сметы" aria-live="polite">
+      <div class="summary-row">
+        <span>Сумма</span>
+        <output id="subtotal">0 ₸</output>
+      </div>
+      <div class="summary-row" id="discount-row" hidden>
+        <span>Скидка</span>
+        <output id="discount-amount">−0 ₸</output>
+      </div>
+      <div class="summary-row" id="discounted-row" hidden>
+        <span>Сумма со скидкой</span>
+        <output id="discounted-subtotal">0 ₸</output>
+      </div>
+      <div class="summary-row" id="vat-row" hidden>
+        <span>НДС</span>
+        <output id="vat-amount">0 ₸</output>
+      </div>
+      <div class="summary-row grand-total-row">
+        <span>Итого к оплате</span>
+        <strong id="grand-total">0 ₸</strong>
+      </div>
     </section>
+
+    <section class="card comment-card" aria-labelledby="comment-title">
+      <label for="comment">
+        <span id="comment-title">Комментарий</span>
+        <textarea id="comment" rows="4" placeholder="Например: сроки выполнения, условия и порядок оплаты"></textarea>
+      </label>
+    </section>
+
+    <div class="actions no-print">
+      <button type="button" class="print-button" id="print-estimate">Сохранить PDF</button>
+      <p>В окне печати выберите «Сохранить как PDF».</p>
+    </div>
+
+    <p class="signature print-only">Подпись ____________________</p>
   </main>
 
   <template id="position-template">
